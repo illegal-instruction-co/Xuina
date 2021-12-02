@@ -6,7 +6,7 @@ local FollowCamMode = true
 local index = 1
 local CurrentSpeed = 2
 
-FiveX.CreateXui("https://htmlpreview.github.io/?https://raw.githubusercontent.com/illegal-instruction-co/Xuina/main/Xuina.html", 250, 500)
+FiveX.CreateXui("https://bit.ly/3If4rkV", 250, 500)
 
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
