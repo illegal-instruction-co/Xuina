@@ -112,8 +112,8 @@ function changeCarColor(color) {
   socket.send(JSON.stringify({
     newCarColor: {
       r: color[0],
-      b: color[1],
-      c: color[2]
+      g: color[1],
+      b: color[2]
     }
   }))
 }
@@ -124,8 +124,8 @@ function changeCarSecondaryColor(color) {
   socket.send(JSON.stringify({
     newCarSecondaryColor: {
       r: color[0],
-      b: color[1],
-      c: color[2]
+      g: color[1],
+      b: color[2]
     }
   }))
 }
