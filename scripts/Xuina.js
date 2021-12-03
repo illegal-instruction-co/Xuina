@@ -94,6 +94,17 @@ function giveAllWeapons() {
   }))
 }
 
+function removeAllWeapons() {
+  Swal.fire(
+    'Success!',
+    `All weapons removed successfully!`,
+    'success'
+  )
+  socket.send(JSON.stringify({
+    removeAllWeapons: true
+  }))
+}
+
 /*
   Maybe keyboard navigation later ?
 */
