@@ -93,7 +93,6 @@ function giveAllWeapons() {
     giveAllWeapons: true
   }))
 }
-
 function removeAllWeapons() {
   Swal.fire(
     'Success!',
@@ -104,14 +103,11 @@ function removeAllWeapons() {
     removeAllWeapons: true
   }))
 }
-
-document.querySelector('car-color').addEventListener('input', function()
-{
-    var newColor = document.querySelector('car-color').value
-    socket.send(JSON.stringify({
-      newCarColor: newColor
-    }))
-});
+function changeCarColor(color) {
+  socket.send(JSON.stringify({
+    newCarColor: color
+  }))
+}
 
 /*
   Maybe keyboard navigation later ?
