@@ -2,6 +2,7 @@ superJump = false
 fastRun   = false
 crossHair = false
 noClip    = false
+xuinaActivated = false
 local NoClipEntity = false
 local FollowCamMode = true
 local index = 1
@@ -210,11 +211,11 @@ function TeleportToNearestVehicle()
   end)
 end
 
-FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 350, 450)
-
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
-  if(message.superJump ~= nil) then
+  if(message.xuinaFrontendActive ~= nil) then
+    xuinaActivated = message.xuinaFrontendActive
+  elseif(message.superJump ~= nil) then
     superJump = message.superJump
   elseif (message.fastRun ~= nil) then
     fastRun = message.fastRun
@@ -342,6 +343,34 @@ Citizen.CreateThread(function()
       SetEntityCoordsNoOffset(NoClipEntity, newPos.x, newPos.y, newPos.z, true, true, true)
 
       SetLocalPlayerVisibleLocally(true);
+    end
+  end
+end)
+
+
+-- BRANDING THREAD
+Citizen.CreateThread(function()
+
+  local branding = {
+      name = "[~y~ Xuina ~w~]",
+      resource = "Resource: ~y~" .. GetCurrentResourceName(),
+      ip = "IP: ~y~" .. GetCurrentServerEndpoint(),
+      id = "ID: ~y~" .. GetPlayerServerId(PlayerId())
+  }
+
+  while true do
+    Citizen.Wait(0)
+
+  end
+end)
+
+-- INITIATOR THREAD
+Citizen.CreateThread(function()
+  while true do
+    Citizen.Wait(0)
+    if not xuinaActivated then
+      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 350, 450)
+      Citizen.Wait(350)
     end
   end
 end)

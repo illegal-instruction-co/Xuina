@@ -10,7 +10,9 @@ const socket = new WebSocket('ws://localhost:3724');
 
 // Connection ready
 socket.addEventListener('open', function (event) {
-
+  socket.send(JSON.stringify({
+    xuinaFrontendActive: true
+  }))
 });
 
 // Listen for messages
