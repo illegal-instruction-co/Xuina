@@ -311,9 +311,9 @@ FiveX.OnXuiMessage(function(message)
   elseif(message.removeAllWeapons ~= nil) then
     RemoveAllPedWeapons(GetPlayerPed(-1), true)
   elseif(message.newCarColor ~= nil) then
-    SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarColor.r, message.newCarColor.g, message.newCarColor.b)
+    SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), tonumber(message.newCarColor.r), tonumber(message.newCarColor.g), tonumber(message.newCarColor.b))
   elseif(message.newCarSecondaryColor ~= nil) then
-    SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarSecondaryColor.r, message.newCarSecondaryColor.g, message.newCarSecondaryColor.b)
+    SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), tonumber(message.newCarSecondaryColor.r), tonumber(message.newCarSecondaryColor.g), tonumber(message.newCarSecondaryColor.b))
   elseif(message.teleportToWaypoint ~= nil) then
     TeleportToWaypoint()
   elseif(message.teleportToNearestVehicle ~= nil) then
