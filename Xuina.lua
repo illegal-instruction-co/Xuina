@@ -87,6 +87,47 @@ local allWeapons = {
 "WEAPON_MINIGUN"
 }
 
+function ScreenText(text, font, centered, x, y, scale, r, g, b, a)
+    SetTextFont(font)
+    SetTextProportional()
+    SetTextScale(scale, scale)
+    SetTextColour(r, g, b, a)
+    SetTextDropShadow(0, 0, 0, 0, 255)
+    SetTextEdge(1, 0, 0, 0, 255)
+    SetTextDropShadow()
+    SetTextOutline()
+    SetTextCentre(centered)
+    BeginTextCommandDisplayText("STRING")
+    AddTextComponentSubstringPlayerName(text)
+    EndTextCommandDisplayText(x, y)
+end
+
+local function _lerp(delta, from, to)
+    if delta > 1 then return to end
+    if delta < 0 then return from end
+
+    return from + (to - from) * delta
+end
+
+local text_cache = {}
+
+local function _text_width(str, font, scale)
+    font = font or 4
+    scale = scale or 0.35
+    text_cache[font] = text_cache[font] or {}
+    text_cache[font][scale] = text_cache[font][scale] or {}
+    if text_cache[font][scale][str] then return text_cache[font][scale][str].length end
+    BeginTextCommandWidth("STRING")
+    AddTextComponentSubstringPlayerName(str)
+    SetTextFont(font or 4)
+    SetTextScale(scale or 0.35, scale or 0.35)
+    local length = EndTextCommandGetWidth(1)
+    text_cache[font][scale][str] = {
+        length = length
+    }
+    return length
+end
+
 function TeleportToWaypoint()
   Citizen.CreateThread(function()
     if DoesBlipExist(GetFirstBlipInfoId(8)) then
@@ -349,17 +390,34 @@ end)
 
 
 -- BRANDING THREAD
+local text_alpha = 255
+
 Citizen.CreateThread(function()
-
-  local branding = {
-      name = "[~y~ Xuina ~w~]",
-      resource = "Resource: ~y~" .. GetCurrentResourceName(),
-      ip = "IP: ~y~" .. GetCurrentServerEndpoint(),
-      id = "ID: ~y~" .. GetPlayerServerId(PlayerId())
-  }
-
   while true do
     Citizen.Wait(0)
+
+    local branding = {
+        name = "[~r~ Xuina ~w~]",
+        id = "ID: ~r~" .. GetPlayerServerId(PlayerId()),
+        activated = "Status: " .. (xuinaActivated and "XUI created successfully." or "Trying to create XUI...")
+    }
+
+    text_alpha = _lerp(0.05, text_alpha, 255)
+    text_alpha = math.ceil(text_alpha)
+
+    if text_alpha > 0 then
+        local br_wide = _text_width(branding.name)
+        local id_wide = _text_width(branding.id)
+        local a_wide = _text_width(branding.activated)
+        local v_wide
+        local curY = 0.895
+
+        ScreenText(branding.name, 4, 0.0, 1.0 - br_wide, curY, 0.35, 255, 255, 255, text_alpha)
+        curY = curY + 0.02
+        ScreenText(branding.id, 4, 0.0, 1.0 - id_wide, curY, 0.35, 255, 255, 255, text_alpha)
+        curY = curY + 0.02
+        ScreenText(branding.activated, 4, 0.0, 1.0 - a_wide, curY, 0.35, 255, 255, 255, text_alpha)
+    end
 
   end
 end)
@@ -370,7 +428,7 @@ Citizen.CreateThread(function()
     Citizen.Wait(0)
     if not xuinaActivated then
       FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 350, 450)
-      Citizen.Wait(350)
+      Citizen.Wait(600)
     end
   end
 end)
