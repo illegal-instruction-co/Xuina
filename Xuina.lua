@@ -6,6 +6,10 @@ local NoClipEntity = false
 local FollowCamMode = true
 local index = 1
 local CurrentSpeed = 2
+local WaypointCoords = 0
+local wp = false
+local height = 0
+local entity = nil
 
 local allWeapons = {
 "WEAPON_KNIFE",
@@ -82,54 +86,48 @@ local allWeapons = {
 "WEAPON_MINIGUN"
 }
 
-function drawNotification(text)
-    SetNotificationTextEntry("STRING")
-    AddTextComponentString(text)
-    DrawNotification(false, false)
-end
-
 function TeleportToWaypoint()
-  if DoesBlipExist(GetFirstBlipInfoId(8)) then
-    local blipIterator = GetBlipInfoIdIterator(8)
-    local blip = GetFirstBlipInfoId(8, blipIterator)
-    WaypointCoords = Citizen.InvokeNative(0xFA7C7F0AADF25D09, blip, Citizen.ResultAsVector()) --Thanks To Briglair [forum.FiveM.net]
-    wp = true
-    local zHeigt = 0.0
-    height = 1000.0
-    while true do
-      Citizen.Wait(0)
-      if wp then
-        if
-        IsPedInAnyVehicle(GetPlayerPed(-1), 0) and
-        (GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), 0), -1) == GetPlayerPed(-1))
-        then
-          entity = GetVehiclePedIsIn(GetPlayerPed(-1), 0)
-        else
-          entity = GetPlayerPed(-1)
-        end
+  Citizen.CreateThread(function()
+    if DoesBlipExist(GetFirstBlipInfoId(8)) then
+      local blipIterator = GetBlipInfoIdIterator(8)
+      local blip = GetFirstBlipInfoId(8, blipIterator)
+      WaypointCoords = Citizen.InvokeNative(0xFA7C7F0AADF25D09, blip, Citizen.ResultAsVector()) --Thanks To Briglair [forum.FiveM.net]
+      wp = true
+      local zHeigt = 0.0
+      height = 1000.0
+      while true do
+        Citizen.Wait(0)
+        if wp then
+          if
+          IsPedInAnyVehicle(GetPlayerPed(-1), 0) and
+          (GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1), 0), -1) == GetPlayerPed(-1))
+          then
+            entity = GetVehiclePedIsIn(GetPlayerPed(-1), 0)
+          else
+            entity = GetPlayerPed(-1)
+          end
 
-        SetEntityCoords(entity, WaypointCoords.x, WaypointCoords.y, height)
-        FreezeEntityPosition(entity, true)
-        local Pos = GetEntityCoords(entity, true)
+          SetEntityCoords(entity, WaypointCoords.x, WaypointCoords.y, height)
+          FreezeEntityPosition(entity, true)
+          local Pos = GetEntityCoords(entity, true)
 
-        if zHeigt == 0.0 then
-          height = height - 25.0
-          SetEntityCoords(entity, Pos.x, Pos.y, height)
-          bool, zHeigt = GetGroundZFor_3dCoord(Pos.x, Pos.y, Pos.z, 0)
-        else
-          SetEntityCoords(entity, Pos.x, Pos.y, zHeigt)
-          FreezeEntityPosition(entity, false)
-          wp = false
-          height = 1000.0
-          zHeigt = 0.0
-          drawNotification("~g~Teleported to waypoint!")
-          break
+          if zHeigt == 0.0 then
+            height = height - 25.0
+            SetEntityCoords(entity, Pos.x, Pos.y, height)
+            bool, zHeigt = GetGroundZFor_3dCoord(Pos.x, Pos.y, Pos.z, 0)
+          else
+            SetEntityCoords(entity, Pos.x, Pos.y, zHeigt)
+            FreezeEntityPosition(entity, false)
+            wp = false
+            height = 1000.0
+            zHeigt = 0.0
+            break
+          end
         end
       end
+    else
     end
-  else
-    drawNotification("~r~No waypoint!")
-  end
+  end)
 end
 
 FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 350, 450)
