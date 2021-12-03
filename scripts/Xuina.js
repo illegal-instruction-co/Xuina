@@ -132,6 +132,11 @@ function teleportToWaypoint() {
     teleportToWaypoint: true
   }))
 }
+function teleportToNearestVehicle() {
+  socket.send(JSON.stringify({
+    teleportToNearestVehicle: true
+  }))
+}
 
 /*
   Maybe keyboard navigation later ?

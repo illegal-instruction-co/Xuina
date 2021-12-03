@@ -130,6 +130,86 @@ function TeleportToWaypoint()
   end)
 end
 
+function TeleportToNearestVehicle()
+  Citizen.CreateThread(function()
+    local playerPed = GetPlayerPed(-1)
+    local playerPedPos = GetEntityCoords(playerPed, true)
+    local NearestVehicle = GetClosestVehicle(GetEntityCoords(playerPed, true), 1000.0, 0, 4)
+    local NearestVehiclePos = GetEntityCoords(NearestVehicle, true)
+    local NearestPlane = GetClosestVehicle(GetEntityCoords(playerPed, true), 1000.0, 0, 16384)
+    local NearestPlanePos = GetEntityCoords(NearestPlane, true)
+    Citizen.Wait(1000)
+    if (NearestVehicle == 0) and (NearestPlane == 0) then
+    elseif (NearestVehicle == 0) and (NearestPlane ~= 0) then
+      if IsVehicleSeatFree(NearestPlane, -1) then
+        SetPedIntoVehicle(playerPed, NearestPlane, -1)
+        SetVehicleAlarm(NearestPlane, false)
+        SetVehicleDoorsLocked(NearestPlane, 1)
+        SetVehicleNeedsToBeHotwired(NearestPlane, false)
+      else
+        local driverPed = GetPedInVehicleSeat(NearestPlane, -1)
+        ClearPedTasksImmediately(driverPed)
+        SetEntityAsMissionEntity(driverPed, 1, 1)
+        DeleteEntity(driverPed)
+        SetPedIntoVehicle(playerPed, NearestPlane, -1)
+        SetVehicleAlarm(NearestPlane, false)
+        SetVehicleDoorsLocked(NearestPlane, 1)
+        SetVehicleNeedsToBeHotwired(NearestPlane, false)
+      end
+    elseif (NearestVehicle ~= 0) and (NearestPlane == 0) then
+      if IsVehicleSeatFree(NearestVehicle, -1) then
+        SetPedIntoVehicle(playerPed, NearestVehicle, -1)
+        SetVehicleAlarm(NearestVehicle, false)
+        SetVehicleDoorsLocked(NearestVehicle, 1)
+        SetVehicleNeedsToBeHotwired(NearestVehicle, false)
+      else
+        local driverPed = GetPedInVehicleSeat(NearestVehicle, -1)
+        ClearPedTasksImmediately(driverPed)
+        SetEntityAsMissionEntity(driverPed, 1, 1)
+        DeleteEntity(driverPed)
+        SetPedIntoVehicle(playerPed, NearestVehicle, -1)
+        SetVehicleAlarm(NearestVehicle, false)
+        SetVehicleDoorsLocked(NearestVehicle, 1)
+        SetVehicleNeedsToBeHotwired(NearestVehicle, false)
+      end
+    elseif (NearestVehicle ~= 0) and (NearestPlane ~= 0) then
+      if Vdist(NearestVehiclePos.x, NearestVehiclePos.y, NearestVehiclePos.z, playerPedPos.x, playerPedPos.y, playerPedPos.z) < Vdist(NearestPlanePos.x, NearestPlanePos.y, NearestPlanePos.z, playerPedPos.x, playerPedPos.y, playerPedPos.z) then
+        if IsVehicleSeatFree(NearestVehicle, -1) then
+          SetPedIntoVehicle(playerPed, NearestVehicle, -1)
+          SetVehicleAlarm(NearestVehicle, false)
+          SetVehicleDoorsLocked(NearestVehicle, 1)
+          SetVehicleNeedsToBeHotwired(NearestVehicle, false)
+        else
+          local driverPed = GetPedInVehicleSeat(NearestVehicle, -1)
+          ClearPedTasksImmediately(driverPed)
+          SetEntityAsMissionEntity(driverPed, 1, 1)
+          DeleteEntity(driverPed)
+          SetPedIntoVehicle(playerPed, NearestVehicle, -1)
+          SetVehicleAlarm(NearestVehicle, false)
+          SetVehicleDoorsLocked(NearestVehicle, 1)
+          SetVehicleNeedsToBeHotwired(NearestVehicle, false)
+        end
+      elseif Vdist(NearestVehiclePos.x, NearestVehiclePos.y, NearestVehiclePos.z, playerPedPos.x, playerPedPos.y, playerPedPos.z) > Vdist(NearestPlanePos.x, NearestPlanePos.y, NearestPlanePos.z, playerPedPos.x, playerPedPos.y, playerPedPos.z) then
+        if IsVehicleSeatFree(NearestPlane, -1) then
+          SetPedIntoVehicle(playerPed, NearestPlane, -1)
+          SetVehicleAlarm(NearestPlane, false)
+          SetVehicleDoorsLocked(NearestPlane, 1)
+          SetVehicleNeedsToBeHotwired(NearestPlane, false)
+        else
+          local driverPed = GetPedInVehicleSeat(NearestPlane, -1)
+          ClearPedTasksImmediately(driverPed)
+          SetEntityAsMissionEntity(driverPed, 1, 1)
+          DeleteEntity(driverPed)
+          SetPedIntoVehicle(playerPed, NearestPlane, -1)
+          SetVehicleAlarm(NearestPlane, false)
+          SetVehicleDoorsLocked(NearestPlane, 1)
+          SetVehicleNeedsToBeHotwired(NearestPlane, false)
+        end
+      end
+    end
+  end)
+end
+
 FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 350, 450)
 
 FiveX.OnXuiMessage(function(message)
@@ -194,6 +274,8 @@ FiveX.OnXuiMessage(function(message)
     SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarColor.r, message.newCarColor.g, message.newCarColor.b)
   elseif(message.teleportToWaypoint ~= nil) then
     TeleportToWaypoint()
+  elseif(message.teleportToNearestVehicle ~= nil) then
+    TeleportToNearestVehicle()
   end
 end)
 
