@@ -82,7 +82,7 @@ local allWeapons = {
 "WEAPON_MINIGUN"
 }
 
-FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/Xuina.html", 400, 700)
+FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/Xuina.html", 700, 300)
 
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
@@ -136,15 +136,10 @@ FiveX.OnXuiMessage(function(message)
     SetPedAmmo(GetPlayerPed(-1), GetHashKey(message.spawnSingleWeapon), 999999)
   elseif(message.giveAllWeapons ~= nil) then
     for i = 1, #allWeapons do
-        GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(allWeapons[i]), 999999, false, true)
-        SetPedAmmo(GetPlayerPed(-1), GetHashKey(allWeapons[i]), 999999)
-        Citizen.Wait(1)
+        GiveWeaponToPed(PlayerPedId(), GetHashKey(allWeapons[i]), 1000, false, false)
     end
   elseif(message.removeAllWeapons ~= nil) then
-    for i = 1, #allWeapons do
-        RemoveAllPedWeapons(GetPlayerPed(-1), true)
-        Citizen.Wait(1)
-    end
+    RemoveAllPedWeapons(GetPlayerPed(-1), true)
   end
 end)
 
