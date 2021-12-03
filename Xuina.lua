@@ -65,6 +65,13 @@ Citizen.CreateThread(function()
     if superJump then
       SetSuperJumpThisFrame(PlayerId(-1))
     end
+    if fastRun then
+      SetRunSprintMultiplierForPlayer(PlayerId(-1), 2.49)
+      SetPedMoveRateOverride(GetPlayerPed(-1), 2.15)
+    else
+      SetRunSprintMultiplierForPlayer(PlayerId(-1), 1.0)
+      SetPedMoveRateOverride(GetPlayerPed(-1), 1.0)
+    end
     if crossHair then
       ShowHudComponentThisFrame(14)
     end
