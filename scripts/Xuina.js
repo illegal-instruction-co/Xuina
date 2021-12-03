@@ -115,7 +115,7 @@ function changeCarColor(color) {
     }
   }))
 }
-function changeSecondaryCarColor(color) {
+function changeCarSecondaryColor(color) {
   color = color.substring(4, color.length-1)
          .replace(/ /g, '')
          .split(',');
