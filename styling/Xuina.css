@@ -5,6 +5,9 @@ body {
   font-weight:700;
   user-select: none;
 }
+.the-container {
+  margin-top: 30px;
+}
 ul.form {
   position:relative;
   background:#fff;
@@ -97,6 +100,9 @@ ul.form {
   width: 100%;
   padding-left: 5px;
   -webkit-app-region:drag;
+  position: fixed;
+  top: 0px;
+  z-index: 5;
 }
 .accordion-button {
   background-color: #121212 !important;

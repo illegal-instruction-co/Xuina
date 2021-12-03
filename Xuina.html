@@ -17,56 +17,57 @@
   <div class ="drag">
     <img src = "./assets/logo.jpg" height="25" width="25">uina
   </div>
-  <div class="accordion" id="main-menu">
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="on-off-menu">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMain" aria-expanded="true" aria-controls="collapseMain">
-          ON / OFF
-        </button>
-      </h2>
-      <div id="collapseMain" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <ul class="form">
-            <li hover onClick="superJump()"><a href="#">Super Jump <em id="superJumpToggle">false</em></a></li>
-            <li hover onClick="fastRun()"><a href="#">Fast Run <em id="fastRunToggle">false</em></a></li>
-            <li onClick="thermalVision()"><a href="#">Thermal Vision <em id="thermalVisionToggle">false</em></a></li>
-            <li onClick="nightVision()"><a href="#">Night Vision <em id="nightVisionToggle">false</em></a></li>
-            <li onClick="crossHair()"><a href="#">Cross Hair <em id="crossHairToggle">false</em></a></li>
-          	<li onClick="noClip()"><a href="#">Noclip <em id="noClipToggle">false</em></a></li>
-          </ul>
+  <div class = "the-container">
+    <div class="accordion" id="main-menu">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="on-off-menu">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMain" aria-expanded="true" aria-controls="collapseMain">
+            ON / OFF
+          </button>
+        </h2>
+        <div id="collapseMain" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="form">
+              <li hover onClick="superJump()"><a href="#">Super Jump <em id="superJumpToggle">false</em></a></li>
+              <li hover onClick="fastRun()"><a href="#">Fast Run <em id="fastRunToggle">false</em></a></li>
+              <li onClick="thermalVision()"><a href="#">Thermal Vision <em id="thermalVisionToggle">false</em></a></li>
+              <li onClick="nightVision()"><a href="#">Night Vision <em id="nightVisionToggle">false</em></a></li>
+              <li onClick="crossHair()"><a href="#">Cross Hair <em id="crossHairToggle">false</em></a></li>
+            	<li onClick="noClip()"><a href="#">Noclip <em id="noClipToggle">false</em></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="weapon-menus">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWeapon" aria-expanded="true" aria-controls="collapseWeapon">
+            WEAPON
+          </button>
+        </h2>
+        <div id="collapseWeapon" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="form">
+              <li hover onClick="testingen()"><a href="#">Spawn Single Weapon</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="weapon-menus">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVehicle" aria-expanded="true" aria-controls="collapseVehicle">
+            VEHICLE
+          </button>
+        </h2>
+        <div id="collapseVehicle" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <ul class="form">
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="weapon-menus">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWeapon" aria-expanded="true" aria-controls="collapseWeapon">
-          WEAPON
-        </button>
-      </h2>
-      <div id="collapseWeapon" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <ul class="form">
-            <li hover onClick="testingen()"><a href="#">Spawn Single Weapon</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="weapon-menus">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVehicle" aria-expanded="true" aria-controls="collapseVehicle">
-          VEHICLE
-        </button>
-      </h2>
-      <div id="collapseVehicle" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-        <div class="accordion-body">
-          <ul class="form">
-          </ul>
-        </div>
-      </div>
-    </div>
-
   </div>
   <script type="text/javascript" src="./scripts/Xuina.js"></script>
   </body>
