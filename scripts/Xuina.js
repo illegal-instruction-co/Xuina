@@ -104,8 +104,27 @@ function removeAllWeapons() {
   }))
 }
 function changeCarColor(color) {
+  color = color.substring(4, color.length-1)
+         .replace(/ /g, '')
+         .split(',');
   socket.send(JSON.stringify({
-    newCarColor: color
+    newCarColor: {
+      r: color[0],
+      b: color[1],
+      c: color[2]
+    }
+  }))
+}
+function changeSecondaryCarColor(color) {
+  color = color.substring(4, color.length-1)
+         .replace(/ /g, '')
+         .split(',');
+  socket.send(JSON.stringify({
+    newCarSecondaryColor: {
+      r: color[0],
+      b: color[1],
+      c: color[2]
+    }
   }))
 }
 

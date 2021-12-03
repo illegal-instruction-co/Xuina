@@ -141,7 +141,9 @@ FiveX.OnXuiMessage(function(message)
   elseif(message.removeAllWeapons ~= nil) then
     RemoveAllPedWeapons(GetPlayerPed(-1), true)
   elseif(message.newCarColor ~= nil) then
-    print(message.newCarColor)
+    SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarColor.r, message.newCarColor.g, message.newCarColor.b)
+  elseif(message.newCarSecondaryColor ~= nil) then
+    SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarColor.r, message.newCarColor.g, message.newCarColor.b)
   end
 end)
 
