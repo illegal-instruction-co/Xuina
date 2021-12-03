@@ -82,7 +82,7 @@ local allWeapons = {
 "WEAPON_MINIGUN"
 }
 
-FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/Xuina.html", 700, 300)
+FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/Xuina.html", 350, 450)
 
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
