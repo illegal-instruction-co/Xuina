@@ -1,4 +1,5 @@
 superJump = false
+fastRun   = false
 crossHair = false
 noClip    = false
 local NoClipEntity = false
@@ -12,6 +13,8 @@ FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
   if(message.superJump ~= nil) then
     superJump = message.superJump
+  elseif (message.fastRun ~= nil) then
+    fastRun = message.fastRun
   elseif (message.thermalVision ~= nil) then
     if(message.thermalVision) then
       SetSeethrough(true)
@@ -55,7 +58,7 @@ FiveX.OnXuiMessage(function(message)
   end
 end)
 
--- Main Thread
+-- ON - OFF MENU THREAD
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)

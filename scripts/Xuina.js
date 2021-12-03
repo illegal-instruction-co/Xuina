@@ -1,4 +1,5 @@
 var superJumpToggle = false
+var fastRunToggle = false
 var thermalVisionToggle = false
 var nightVisionToggle = false
 var crossHairToggle = false
@@ -19,6 +20,9 @@ socket.addEventListener('message', function (event) {
     }
 });
 
+/*
+  ON - OFF MENU
+*/
 function superJump() {
   superJumpToggle = !superJumpToggle
   socket.send(JSON.stringify({
@@ -26,7 +30,13 @@ function superJump() {
   }))
   document.getElementById("superJumpToggle").innerHTML = superJumpToggle
 }
-
+function fastRun() {
+  fastRunToggle = !fastRunToggle
+  socket.send(JSON.stringify({
+    fastRun: fastRunToggle
+  }))
+  document.getElementById("fastRunToggle").innerHTML = fastRunToggle
+}
 function thermalVision() {
   thermalVisionToggle = !thermalVisionToggle
   socket.send(JSON.stringify({
@@ -34,7 +44,6 @@ function thermalVision() {
   }))
   document.getElementById("thermalVisionToggle").innerHTML = thermalVisionToggle
 }
-
 function nightVision() {
   nightVisionToggle = !nightVisionToggle
   socket.send(JSON.stringify({
@@ -42,7 +51,6 @@ function nightVision() {
   }))
   document.getElementById("nightVisionToggle").innerHTML = nightVisionToggle
 }
-
 function crossHair() {
   crossHairToggle = !crossHairToggle
   socket.send(JSON.stringify({
@@ -50,11 +58,32 @@ function crossHair() {
   }))
   document.getElementById("crossHairToggle").innerHTML = crossHairToggle
 }
-
 function noClip() {
   noClipToggle = !noClipToggle
   socket.send(JSON.stringify({
     noClip: noClipToggle
   }))
   document.getElementById("noClipToggle").innerHTML = noClipToggle
+}
+
+/*
+  Maybe keyboard navigation later ?
+*/
+document.onkeydown = function(e) {
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        // up arrow
+    }
+    else if (e.keyCode == '40') {
+        // down arrow
+    }
+    else if (e.keyCode == '37') {
+       // left arrow
+    }
+    else if (e.keyCode == '39') {
+       // right arrow
+    }
+
 }
