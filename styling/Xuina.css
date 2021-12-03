@@ -129,7 +129,7 @@ ul.form {
   color: white !important;
 }
 .accordion-body {
-  background-color: rgba(255, 255, 255, 0) !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .accordion-button:after {
