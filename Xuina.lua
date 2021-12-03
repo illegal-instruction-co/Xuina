@@ -313,7 +313,7 @@ FiveX.OnXuiMessage(function(message)
   elseif(message.newCarColor ~= nil) then
     SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarColor.r, message.newCarColor.g, message.newCarColor.b)
   elseif(message.newCarSecondaryColor ~= nil) then
-    SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarColor.r, message.newCarColor.g, message.newCarColor.b)
+    SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), message.newCarSecondaryColor.r, message.newCarSecondaryColor.g, message.newCarSecondaryColor.b)
   elseif(message.teleportToWaypoint ~= nil) then
     TeleportToWaypoint()
   elseif(message.teleportToNearestVehicle ~= nil) then
