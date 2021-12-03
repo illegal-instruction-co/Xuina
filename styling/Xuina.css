@@ -15,11 +15,6 @@ ul.form {
   padding:0;
   list-style: none;
   overflow:hidden;
-
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  border-radius: 5px;
-
   -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
   box-shadow:  1px 1px 10px rgba(0, 0, 0, 0.1);
@@ -47,6 +42,7 @@ ul.form {
 .form li a {
   width:100%;
   padding-left:10px;
+  padding-bottom: 55px;
   height:38px;
   line-height:58px;
   display:block;
@@ -55,6 +51,7 @@ ul.form {
   text-decoration:none;
   text-transform:uppercase;
   font-size:12px;
+  font-weight: lighter;
   color: #ddd;
   background-color: #131313;
   -webkit-transition:all 0.2s linear;
@@ -69,15 +66,9 @@ ul.form {
 }
 
 .form li:first-child a:hover, .form li:first-child a {
-  -webkit-border-radius: 5px 5px 0 0;
-  -moz-border-radius: 5px 5px 0 0;
-  border-radius: 5px 5px 0 0;
 }
 
 .form li:last-child a:hover, .form li:last-child a {
-  -webkit-border-radius: 0 0 5px 5px;
-  -moz-border-radius: 0 0 5px 5px;
-  border-radius: 0 0 5px 5px;
 }
 
 .form li a:hover i {
