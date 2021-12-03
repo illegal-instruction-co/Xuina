@@ -140,6 +140,8 @@ FiveX.OnXuiMessage(function(message)
     end
   elseif(message.removeAllWeapons ~= nil) then
     RemoveAllPedWeapons(GetPlayerPed(-1), true)
+  elseif(message.newCarColor ~= nil) then
+    print(message.newCarColor)
   end
 end)
 

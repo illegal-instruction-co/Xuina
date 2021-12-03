@@ -105,6 +105,14 @@ function removeAllWeapons() {
   }))
 }
 
+document.querySelector('car-color').addEventListener('input', function()
+{
+    var newColor = document.querySelector('car-color').value
+    socket.send(JSON.stringify({
+      newCarColor: newColor
+    }))
+});
+
 /*
   Maybe keyboard navigation later ?
 */
