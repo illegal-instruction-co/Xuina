@@ -127,6 +127,11 @@ function changeCarSecondaryColor(color) {
     }
   }))
 }
+function teleportToWaypoint() {
+  socket.send(JSON.stringify({
+    teleportToWaypoint: true
+  }))
+}
 
 /*
   Maybe keyboard navigation later ?
