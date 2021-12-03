@@ -98,6 +98,7 @@ ul.form {
   line-height: 10px;
   height: 15px;
   float:right;
+  font-weight: bolder;
 }
 
 .form li.selected a {
