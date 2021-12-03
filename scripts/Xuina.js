@@ -66,6 +66,19 @@ function noClip() {
   document.getElementById("noClipToggle").innerHTML = noClipToggle
 }
 
+async function testingen() {
+  const { value: WEAPON_NAME } = await Swal.fire({
+    input: 'text',
+    inputPlaceholder: 'Enter a weapon name: ',
+    confirmButtonText: 'Spawn'
+  })
+
+  if (WEAPON_NAME) {
+    socket.send(JSON.stringify({
+      spawnSingleWeapon: WEAPON_NAME
+    }))
+  }
+}
 /*
   Maybe keyboard navigation later ?
 */

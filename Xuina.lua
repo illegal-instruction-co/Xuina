@@ -55,6 +55,10 @@ FiveX.OnXuiMessage(function(message)
     SetEveryoneIgnorePlayer(PlayerPedId(), not noClip);
     SetPoliceIgnorePlayer(PlayerPedId(), not noClip);
     noClip = message.noClip
+
+  elseif(message.spawnSingleWeapon ~= nil) then
+    GiveWeaponToPed(GetPlayerPed(-1), GetHashKey(message.spawnSingleWeapon), 999999, false, true)
+    SetPedAmmo(GetPlayerPed(-1), GetHashKey(message.spawnSingleWeapon), 999999)
   end
 end)
 
