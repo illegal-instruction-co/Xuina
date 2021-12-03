@@ -399,6 +399,8 @@ Citizen.CreateThread(function()
     local branding = {
         name = "[~r~ Xuina ~w~]",
         id = "ID: ~r~" .. GetPlayerServerId(PlayerId()),
+        resource = "Resource: ~r~" .. (GetCurrentResourceName() and GetCurrentResourceName() or "N/A"),
+        ip = "IP: ~r~" .. (GetCurrentServerEndpoint() and GetCurrentServerEndpoint() or "N/A"),
         activated = "Status: " .. (xuinaActivated and "XUI created successfully." or "Trying to create XUI...")
     }
 
@@ -408,11 +410,17 @@ Citizen.CreateThread(function()
     if text_alpha > 0 then
         local br_wide = _text_width(branding.name)
         local id_wide = _text_width(branding.id)
+        local r_wide = _text_width(branding.resource)
+        local ip_wide = _text_width(branding.ip)
         local a_wide = _text_width(branding.activated)
         local v_wide
         local curY = 0.895
 
         ScreenText(branding.name, 4, 0.0, 1.0 - br_wide, curY, 0.35, 255, 255, 255, text_alpha)
+        curY = curY + 0.02
+        ScreenText(branding.resource, 4, 0.0, 1.0 - r_wide, curY, 0.35, 255, 255, 255, text_alpha)
+        curY = curY + 0.02
+        ScreenText(branding.ip, 4, 0.0, 1.0 - ip_wide, curY, 0.35, 255, 255, 255, text_alpha)
         curY = curY + 0.02
         ScreenText(branding.id, 4, 0.0, 1.0 - id_wide, curY, 0.35, 255, 255, 255, text_alpha)
         curY = curY + 0.02
