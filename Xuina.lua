@@ -1,16 +1,17 @@
-superJump = false
-fastRun   = false
-crossHair = false
-noClip    = false
-xuinaActivated = false
-local NoClipEntity = false
-local FollowCamMode = true
-local index = 1
-local CurrentSpeed = 2
-local WaypointCoords = 0
-local wp = false
-local height = 0
-local entity = nil
+superJump             = false
+fastRun               = false
+crossHair             = false
+noClip                = false
+rainbowVehicle        = false
+xuinaActivated        = false
+local NoClipEntity    = false
+local FollowCamMode   = true
+local index           = 1
+local CurrentSpeed    = 2
+local WaypointCoords  = 0
+local wp              = false
+local height          = 0
+local entity          = nil
 
 local allWeapons = {
 "WEAPON_KNIFE",
@@ -252,6 +253,55 @@ function TeleportToNearestVehicle()
   end)
 end
 
+function TeleportToCoords(x, y, z)
+    local entity
+    if x ~= "" and y ~= "" and z ~= "" then
+        if IsPedInAnyVehicle(GetPlayerPed(-1),0) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1),0),-1)==GetPlayerPed(-1) then
+            entity = GetVehiclePedIsIn(GetPlayerPed(-1),0)
+        else
+            entity = PlayerPedId()
+        end
+        if entity then
+            SetEntityCoords(entity, x + 0.5, y + 0.5, z + 0.5, 1,0,0,1)
+        end
+    else
+    end
+end
+
+function GetClosestPed()
+      local sleep = 500
+      local playerPed = PlayerPedId()
+      local playerPos = GetEntityCoords(playerPed)
+      local handle, ped = FindFirstPed()
+      repeat success, ped = FindNextPed(handle)
+      local distance = GetDistanceBetweenCoords(pedPos, playerPos, true)
+      if distance <= 1000.0 then
+          return ped
+      end
+
+      until not success EndFindPed(handle)
+      Citizen.Wait(sleep)
+end
+
+function TeleportToNearestPed()
+  Citizen.CreateThread(function()
+    local playerPed = GetPlayerPed(-1)
+    local playerPedPos = GetEntityCoords(playerPed, true)
+    local NearestPed = GetClosestPed()
+    local NearestPedPos = GetEntityCoords(NearestPed, true)
+    TeleportToCoords(NearestPedPos.x, NearestPedPos.y, NearestPedPos.z)
+  end)
+end
+
+function rgb(l)
+    local m = {}
+    local n = GetGameTimer() / 200
+    m.r = math.floor(math.sin(n * l + 0) * 127 + 128)
+    m.g = math.floor(math.sin(n * l + 2) * 127 + 128)
+    m.b = math.floor(math.sin(n * l + 4) * 127 + 128)
+    return m
+end
+
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
   if(message.xuinaFrontendActive ~= nil) then
@@ -318,6 +368,25 @@ FiveX.OnXuiMessage(function(message)
     TeleportToWaypoint()
   elseif(message.teleportToNearestVehicle ~= nil) then
     TeleportToNearestVehicle()
+  elseif(message.teleportToNearestPed ~= nil) then
+    TeleportToNearestPed()
+  elseif(message.repairVehicle ~= nil) then
+    SetVehicleFixed(GetVehiclePedIsIn(GetPlayerPed(-1), false))
+    SetVehicleDirtLevel(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0.0)
+    SetVehicleLights(GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+    SetVehicleBurnout(GetVehiclePedIsIn(GetPlayerPed(-1), false), false)
+    Citizen.InvokeNative(0x1FD09E7390A74D54, GetVehiclePedIsIn(GetPlayerPed(-1), false), 0)
+  elseif(message.repairEngineOnly ~= nil) then
+    local veh = GetVehiclePedIsIn(GetPlayerPed(-1), false)
+    SetVehicleUndriveable(veh,false)
+    SetVehicleEngineHealth(veh, 1000.0)
+    SetVehiclePetrolTankHealth(veh, 1000.0)
+    healthEngineLast=1000.0
+    healthPetrolTankLast=1000.0
+    SetVehicleEngineOn(veh, true, false )
+    SetVehicleOilLevel(veh, 1000.0)
+  elseif(message.rainbowVehicle ~= nil) then
+    rainbowVehicle = message.rainbowVehicle
   end
 end)
 
@@ -385,6 +454,12 @@ Citizen.CreateThread(function()
 
       SetLocalPlayerVisibleLocally(true);
     end
+
+    if rainbowVehicle then
+      local rainbowColors = rgb(1.0)
+      SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), rainbowColors.r, rainbowColors.g, rainbowColors.b)
+      SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), rainbowColors.r, rainbowColors.g, rainbowColors.b)
+    end
   end
 end)
 
@@ -435,7 +510,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     if not xuinaActivated then
-      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 350, 450)
+      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/", 350, 450)
       Citizen.Wait(600)
     end
   end

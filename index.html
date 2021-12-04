@@ -34,7 +34,8 @@
               <li onClick="thermalVision()"><a class="normal-text">Thermal Vision <em id="thermalVisionToggle">false</em></a></li>
               <li onClick="nightVision()"><a class="normal-text">Night Vision <em id="nightVisionToggle">false</em></a></li>
               <li onClick="crossHair()"><a class="normal-text">Cross Hair <em id="crossHairToggle">false</em></a></li>
-            	<li onClick="noClip()"><a class="normal-text">Noclip <em id="noClipToggle">false</em></a></li>
+              <li onClick="noClip()"><a class="normal-text">Noclip <em id="noClipToggle">false</em></a></li>
+            	<li onClick="rainbowVehicle()"><a class="normal-text">Rainbow Vehicle <em id="rainbowVehicleToggle">false</em></a></li>
             </ul>
           </div>
         </div>
@@ -68,6 +69,8 @@
             <ul class="form">
               <li onClick=""><a class="normal-text">Color 1: <input onchange = "changeCarColor(this.value)" value="rgb(235,0,41)" data-jscolor="{}"></a></li>
               <li onClick=""><a class="normal-text">Color 2: <input onchange = "changeCarSecondaryColor(this.value)" value="rgb(235,0,41)" data-jscolor="{}"></a></li>
+              <li onClick="repairVehicle()"><a class="normal-text">Repair Vehicle</a></li>
+              <li onClick="repairEngineOnly()"><a class="normal-text">Repair Engine Only</a></li>
             </ul>
           </div>
         </div>
@@ -83,7 +86,8 @@
           <div class="accordion-body">
             <ul class="form">
               <li onClick="teleportToWaypoint()"><a class="normal-text">To waypoint</a></li>
-              <li onClick="teleportToNearestVehicle()"><a class="normal-text">Nearest Vehicle</a></li>
+              <li onClick="teleportToNearestVehicle()"><a class="normal-text">To nearest Vehicle</a></li>
+              <li onClick="teleportToNearestPed()"><a class="normal-text">To nearest Ped</a></li>
             </ul>
           </div>
         </div>
@@ -92,6 +96,5 @@
     </div>
   </div>
   <script type="text/javascript" src="./scripts/Xuina.js"></script>
-  <script type="text/javascript" src="./scripts/hotkey.js"></script>
   </body>
 </html>

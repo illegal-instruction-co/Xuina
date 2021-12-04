@@ -4,6 +4,7 @@ var thermalVisionToggle = false
 var nightVisionToggle = false
 var crossHairToggle = false
 var noClipToggle = false
+var rainbowVehicleToggle = false
 
 // Connect to XUI backend
 const socket = new WebSocket('ws://localhost:3724');
@@ -66,6 +67,13 @@ function noClip() {
     noClip: noClipToggle
   }))
   document.getElementById("noClipToggle").innerHTML = noClipToggle
+}
+function rainbowVehicle() {
+  rainbowVehicleToggle = !rainbowVehicleToggle
+  socket.send(JSON.stringify({
+    rainbowVehicle: rainbowVehicleToggle
+  }))
+  document.getElementById("rainbowVehicleToggle").innerHTML = rainbowVehicleToggle
 }
 async function spawnSingleWeapon() {
   const { value: WEAPON_NAME } = await Swal.fire({
@@ -137,6 +145,21 @@ function teleportToWaypoint() {
 function teleportToNearestVehicle() {
   socket.send(JSON.stringify({
     teleportToNearestVehicle: true
+  }))
+}
+function teleportToNearestPed() {
+  socket.send(JSON.stringify({
+    teleportToNearestPed: true
+  }))
+}
+function repairVehicle() {
+  socket.send(JSON.stringify({
+    repairVehicle: true
+  }))
+}
+function repairEngineOnly() {
+  socket.send(JSON.stringify({
+    repairEngineOnly: true
   }))
 }
 /*
