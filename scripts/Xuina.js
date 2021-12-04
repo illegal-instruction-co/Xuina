@@ -139,7 +139,11 @@ function teleportToNearestVehicle() {
     teleportToNearestVehicle: true
   }))
 }
-
+function teleportToNearestPed() {
+  socket.send(JSON.stringify({
+    teleportToNearestPed: true
+  }))
+}
 /*
   Maybe keyboard navigation later ?
 */
