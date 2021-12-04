@@ -1,10 +1,10 @@
-var superJumpToggle = false
-var fastRunToggle = false
-var thermalVisionToggle = false
-var nightVisionToggle = false
-var crossHairToggle = false
-var noClipToggle = false
-var rainbowVehicleToggle = false
+var superJumpToggle             = false
+var fastRunToggle               = false
+var thermalVisionToggle         = false
+var nightVisionToggle           = false
+var crossHairToggle             = false
+var noClipToggle                = false
+var rainbowVehicleToggle        = false
 
 // Connect to XUI backend
 const socket = new WebSocket('ws://localhost:3724');
@@ -160,6 +160,16 @@ function repairVehicle() {
 function repairEngineOnly() {
   socket.send(JSON.stringify({
     repairEngineOnly: true
+  }))
+}
+function glifeAutoFarm() {
+  socket.send(JSON.stringify({
+    glifeAutoFarm: true
+  }))
+}
+function glifeXpBot() {
+  socket.send(JSON.stringify({
+    glifeXpBot: true
   }))
 }
 /*

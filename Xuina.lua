@@ -302,6 +302,154 @@ function rgb(l)
     return m
 end
 
+function AutoFarmGlife()
+  Citizen.CreateThread(function()
+    local NearestPed = GetClosestPed()
+    Citizen.Wait(1)
+    --RequestControlOnce(NearestPed)
+    SetEntityHealth(NearestPed, 0)
+    SetEntityCollision(NearestPed, false, false)
+    SetEntityCoords(NearestPed, GetEntityCoords(PlayerPedId()))
+  end)
+end
+
+function XpBotGlife()
+  Citizen.CreateThread(function()
+    local NearestPed = GetClosestPed()
+    SetEntityHealth(NearestPed, 100)
+    SetEntityCoords(NearestPed, GetOffsetFromEntityInWorldCoords(PlayerPedId(-1), 3.0, 3.0, 0.5))
+    FreezeEntityPosition(NearestPed, true)
+    IsEntityAttachedToEntity(NearestPed, PlayerPedId(), GetEntityCoords(PlayerPedId(-1), 3.0, 3.0, 0.5))
+
+    local d_ = GetEntityCoords(NearestPed)
+    local e0 = DoesEntityExist(NearestPed)
+    local dO = IsPlayerDead(NearestPed)
+    local e1 = GetPedBoneCoords(NearestPed, 31086, 0, 0, 0)
+
+    ShootSingleBulletBetweenCoords(
+    d_.x,
+    d_.y,
+    d_.z + 3.0,
+    e1.x,
+    e1.y,
+    e1.z,
+    9000,
+    0,
+    GetHashKey("weapon_pistol"),
+    PlayerPedId(),
+    true,
+    false,
+    9000.0
+  )
+
+  ShootSingleBulletBetweenCoords(
+  d_.x,
+  d_.y + 3.0,
+  d_.z,
+  e1.x,
+  e1.y,
+  e1.z,
+  9000,
+  0,
+  GetHashKey("weapon_pistol"),
+  PlayerPedId(),
+  true,
+  false,
+  9000.0
+)
+ShootSingleBulletBetweenCoords(
+d_.x,
+d_.y,
+d_.z + 3.0,
+e1.x,
+e1.y,
+e1.z,
+9000,
+0,
+GetHashKey("weapon_pistol"),
+PlayerPedId(),
+true,
+false,
+9000.0
+)
+ShootSingleBulletBetweenCoords(
+d_.x,
+d_.y + 3.0,
+d_.z,
+e1.x,
+e1.y,
+e1.z,
+9000,
+0,
+GetHashKey("weapon_pistol"),
+PlayerPedId(),
+true,
+false,
+9000.0
+)
+ShootSingleBulletBetweenCoords(
+d_.x,
+d_.y,
+d_.z + 3.0,
+e1.x,
+e1.y,
+e1.z,
+9000,
+0,
+GetHashKey("weapon_pistol"),
+PlayerPedId(),
+true,
+false,
+9000.0
+)
+ShootSingleBulletBetweenCoords(
+d_.x,
+d_.y + 3.0,
+d_.z,
+e1.x,
+e1.y,
+e1.z,
+9000,
+0,
+GetHashKey("weapon_pistol"),
+PlayerPedId(),
+true,
+false,
+9000.0
+)
+ShootSingleBulletBetweenCoords(
+d_.x,
+d_.y,
+d_.z + 3.0,
+e1.x,
+e1.y,
+e1.z,
+9000,
+0,
+GetHashKey("weapon_pistol"),
+PlayerPedId(),
+true,
+false,
+9000.0
+)
+ShootSingleBulletBetweenCoords(
+d_.x,
+d_.y + 3.0,
+d_.z,
+e1.x,
+e1.y,
+e1.z,
+9000,
+0,
+GetHashKey("weapon_pistol"),
+PlayerPedId(),
+true,
+false,
+9000.0
+)
+end)
+end
+
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
   if(message.xuinaFrontendActive ~= nil) then
@@ -387,6 +535,16 @@ FiveX.OnXuiMessage(function(message)
     SetVehicleOilLevel(veh, 1000.0)
   elseif(message.rainbowVehicle ~= nil) then
     rainbowVehicle = message.rainbowVehicle
+  elseif(message.glifeAutoFarm ~= nil) then
+    print(message.glifeAutoFarm)
+    for i=1,50 do
+      AutoFarmGlife()
+    end
+  elseif(message.glifeXpBot ~= nil) then
+    print(message.glifeXpBot)
+    for i=1,50 do
+      XpBotGlife()
+    end
   end
 end)
 
@@ -462,7 +620,6 @@ Citizen.CreateThread(function()
     end
   end
 end)
-
 
 -- BRANDING THREAD
 local text_alpha = 255
