@@ -252,24 +252,6 @@ function TeleportToNearestVehicle()
   end)
 end
 
-function TeleportToNearestPed()
-  Citizen.CreateThread(function()
-    local playerPed = GetPlayerPed(-1)
-    local playerPedPos = GetEntityCoords(playerPed, true)
-    local NearestPed = GetClosestPed(GetEntityCoords(playerPed, true), 1000.0, 1, 0, 1, -1)
-    local NearestPedPos = GetEntityCoords(NearestPed, true)
-    local entity
-    if IsPedInAnyVehicle(GetPlayerPed(-1),0) and GetPedInVehicleSeat(GetVehiclePedIsIn(GetPlayerPed(-1),0),-1)==GetPlayerPed(-1) then
-        entity = GetVehiclePedIsIn(GetPlayerPed(-1),0)
-    else
-        entity = PlayerPedId()
-    end
-    if entity then
-        SetEntityCoords(entity, x + 0.5, y + 0.5, z + 0.5, 1,0,0,1)
-    end
-  end)
-end
-
 FiveX.OnXuiMessage(function(message)
   message = json.decode(message)
   if(message.xuinaFrontendActive ~= nil) then
@@ -336,8 +318,6 @@ FiveX.OnXuiMessage(function(message)
     TeleportToWaypoint()
   elseif(message.teleportToNearestVehicle ~= nil) then
     TeleportToNearestVehicle()
-  elseif(message.teleportToNearestPed ~= nil) then
-    TeleportToNearestPed()
   end
 end)
 
