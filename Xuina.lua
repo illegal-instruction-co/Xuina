@@ -268,6 +268,29 @@ function TeleportToCoords(x, y, z)
     end
 end
 
+function mitoticDivision()
+  Citizen.CreateThread(function()
+    for i=1,5 do
+      ClonePedEx(GetPlayerPed(-1), 0, true, true, true)
+      Citizen.Wait(0)
+    end
+  end)
+end
+
+function mitoticDivisionCrashEveryone()
+  Citizen.CreateThread(function()
+    for i=1,9999 do
+      ClonePedEx(GetPlayerPed(-1), 0, true, true, true)
+      Citizen.Wait(100)
+    end
+  end)
+end
+
+function ghostDriver()
+  local playerPed = GetPlayerPed(-1)
+  Citizen.InvokeNative(0xF9ACF4A08098EA25, playerPed, true)
+end
+
 function GetClosestPed()
       local sleep = 500
       local playerPed = PlayerPedId()
@@ -541,10 +564,13 @@ FiveX.OnXuiMessage(function(message)
       AutoFarmGlife()
     end
   elseif(message.glifeXpBot ~= nil) then
-    print(message.glifeXpBot)
     for i=1,50 do
       XpBotGlife()
     end
+  elseif(message.mitoticDivision ~=nil) then
+    mitoticDivision()
+  elseif(message.mitoticDivisionCrash ~=nil) then
+    mitoticDivisionCrashEveryone()
   end
 end)
 

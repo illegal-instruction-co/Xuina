@@ -172,6 +172,16 @@ function glifeXpBot() {
     glifeXpBot: true
   }))
 }
+function mitoticDivision() {
+  socket.send(JSON.stringify({
+    mitoticDivision: true
+  }))
+}
+function mitoticDivisionCrash() {
+  socket.send(JSON.stringify({
+    mitoticDivision: true
+  }))
+}
 /*
   Maybe keyboard navigation later ?
 */
