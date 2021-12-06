@@ -185,9 +185,17 @@ function mitoticDivisionCrash() {
 /*
   Maybe keyboard navigation later ?
 */
-document.onkeydown = function(e) {
+window.onkeydown = function(e) {
 
     e = e || window.event;
+
+    if (e.keyCode == '88' && e.ctrlKey) {
+      if(document.getElementById("main-container").style.display === 'none') {
+        document.getElementById("main-container").style.display = 'block'
+      } else {
+        document.getElementById("main-container").style.display = 'none'
+      }
+    }
 
     if (e.keyCode == '38') {
         // up arrow

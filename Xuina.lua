@@ -693,7 +693,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     if not xuinaActivated then
-      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/", 350, 450)
+      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/", 1920, 1080)
       Citizen.Wait(600)
     end
   end
