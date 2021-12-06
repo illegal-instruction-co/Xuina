@@ -211,3 +211,5 @@ window.onkeydown = function(e) {
     }
 
 }
+
+$('#main-container').draggable();
