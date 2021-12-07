@@ -212,6 +212,24 @@ function aimbotRange(range) {
   }))
   document.getElementById("aimbotRange").innerHTML = range
 }
+function aimbotX(axis) {
+  socket.send(JSON.stringify({
+    aimbotYAxis: axis
+  }))
+  document.getElementById("aimbotX").innerHTML = axis
+}
+function aimbotY(axis) {
+  socket.send(JSON.stringify({
+    aimbotYAxis: axis
+  }))
+  document.getElementById("aimbotY").innerHTML = axis
+}
+function aimbotZ(axis) {
+  socket.send(JSON.stringify({
+    aimbotZAxis: axis
+  }))
+  document.getElementById("aimbotZ").innerHTML = axis
+}
 /*
   Maybe keyboard navigation later ?
 */

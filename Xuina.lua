@@ -13,10 +13,13 @@ local wp              = false
 local height          = 0
 local entity          = nil
 
-local aimbotOnlyPlayers = true
-local aimbotIgnoreVehicles = false
-local aimbot = false
-local aimbotRange = 5.0
+aimbotOnlyPlayers = true
+aimbotIgnoreVehicles = false
+aimbot = false
+aimbotRange = 5.0
+aimbotXAxis = 0.0
+aimbotYAxis = 0.0
+aimbotZAxis = -0.1
 
 local allWeapons = {
 "WEAPON_KNIFE",
@@ -329,7 +332,6 @@ function GetClosestPedForAiming()
         end
       end
       local playerPos = GetEntityCoords(targettedEntity, true)
-      --local playerPos = GetEntityCoords(playerPed, true)
       local handle, ped = FindFirstPed()
       repeat success, ped = FindNextPed(handle)
       local pedPos = GetEntityCoords(ped, true)
@@ -618,6 +620,15 @@ FiveX.OnXuiMessage(function(message)
     aimbot = message.aimbot
   elseif(message.aimbotRange ~= nil) then
     aimbotRange = message.aimbotRange
+  elseif(message.aimbotXAxis ~= nil) then
+    aimbotXAxis = message.aimbotXAxis
+    print(aimbotZAxis)
+  elseif(message.aimbotYAxis ~= nil) then
+    aimbotYAxis = message.aimbotYAxis
+    print(aimbotYAxis)
+  elseif(message.aimbotZAxis ~= nil) then
+    aimbotYAxis = message.aimbotZAxis
+    print(aimbotYAxis)
   end
 end)
 
@@ -697,7 +708,7 @@ Citizen.CreateThread(function()
       local NearestPed = GetClosestPedForAiming()
       if(NearestPed ~= false) then
         local NearestPedPos = GetEntityCoords(NearestPed, true)
-        SetPedShootsAtCoord(GetPlayerPed(-1), NearestPedPos.x, NearestPedPos.y, NearestPedPos.z -0.1)
+        SetPedShootsAtCoord(GetPlayerPed(-1), NearestPedPos.x + (aimbotXAxis + 0.0), NearestPedPos.y + (aimbotYAxis + 0.0), NearestPedPos.z + (aimbotZAxis + 0.0) )
         SetPlayerSimulateAiming(PlayerId(), true)
       end
     end
