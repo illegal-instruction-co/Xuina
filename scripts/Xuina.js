@@ -5,6 +5,9 @@ var nightVisionToggle           = false
 var crossHairToggle             = false
 var noClipToggle                = false
 var rainbowVehicleToggle        = false
+var aimbotToggle                = false
+var aimbotOnlyPlayersToggle     = true
+var aimbotIgnoreVehiclesToggle  = false
 
 // Connect to XUI backend
 const socket = new WebSocket('ws://localhost:3724');
@@ -181,6 +184,33 @@ function mitoticDivisionCrash() {
   socket.send(JSON.stringify({
     mitoticDivision: true
   }))
+}
+function aimbotIgnoreVehicles() {
+  aimbotIgnoreVehiclesToggle = !aimbotIgnoreVehiclesToggle
+  socket.send(JSON.stringify({
+    aimbotIgnoreVehicles: aimbotIgnoreVehiclesToggle
+  }))
+  document.getElementById("aimbotIgnoreVehiclesToggle").innerHTML = aimbotIgnoreVehiclesToggle
+}
+function aimbotOnlyPlayers() {
+  aimbotOnlyPlayersToggle = !aimbotOnlyPlayersToggle
+  socket.send(JSON.stringify({
+    aimbotOnlyPlayers: aimbotOnlyPlayersToggle
+  }))
+  document.getElementById("aimbotOnlyPlayersToggle").innerHTML = aimbotOnlyPlayersToggle
+}
+function aimbot() {
+  aimbotToggle = !aimbotToggle
+  socket.send(JSON.stringify({
+    aimbot: aimbotToggle
+  }))
+  document.getElementById("aimbotToggle").innerHTML = aimbotToggle
+}
+function aimbotRange(range) {
+  socket.send(JSON.stringify({
+    aimbotRange: range
+  }))
+  document.getElementById("aimbotRange").innerHTML = range
 }
 /*
   Maybe keyboard navigation later ?

@@ -13,6 +13,11 @@ local wp              = false
 local height          = 0
 local entity          = nil
 
+local aimbotOnlyPlayers = true
+local aimbotIgnoreVehicles = false
+local aimbot = false
+local aimbotRange = 5.0
+
 local allWeapons = {
 "WEAPON_KNIFE",
 "WEAPON_KNUCKLE",
@@ -306,6 +311,41 @@ function GetClosestPed()
       Citizen.Wait(sleep)
 end
 
+function GetClosestPedForAiming()
+      local found = false
+
+      local sleep = 0
+      local playerPed = PlayerPedId()
+      local isOK, targettedEntity = GetEntityPlayerIsFreeAimingAt(PlayerId())
+      if( not isOK ) then return found end
+      if( aimbotOnlyPlayers ) then
+        if not IsPedAPlayer(targettedEntity) then
+          return found
+        end
+      end
+      if( aimbotIgnoreVehicles ) then
+        if IsEntityAVehicle(targettedEntity) then
+          return found
+        end
+      end
+      local playerPos = GetEntityCoords(targettedEntity, true)
+      --local playerPos = GetEntityCoords(playerPed, true)
+      local handle, ped = FindFirstPed()
+      repeat success, ped = FindNextPed(handle)
+      local pedPos = GetEntityCoords(ped, true)
+      local distance = GetDistanceBetweenCoords(pedPos, playerPos, true)
+
+      if distance <= (aimbotRange + 0.0) and GetGroundZFor_3dCoord(pedPos.x, pedPos.y, pedPos.z) and not IsPedDeadOrDying(ped, 1) then
+        found = ped
+      end
+
+      until not success EndFindPed(handle)
+      Citizen.Wait(sleep)
+
+      return found
+end
+
+
 function TeleportToNearestPed()
   Citizen.CreateThread(function()
     local playerPed = GetPlayerPed(-1)
@@ -559,7 +599,6 @@ FiveX.OnXuiMessage(function(message)
   elseif(message.rainbowVehicle ~= nil) then
     rainbowVehicle = message.rainbowVehicle
   elseif(message.glifeAutoFarm ~= nil) then
-    print(message.glifeAutoFarm)
     for i=1,50 do
       AutoFarmGlife()
     end
@@ -571,6 +610,14 @@ FiveX.OnXuiMessage(function(message)
     mitoticDivision()
   elseif(message.mitoticDivisionCrash ~=nil) then
     mitoticDivisionCrashEveryone()
+  elseif(message.aimbotIgnoreVehicles ~= nil) then
+    aimbotIgnoreVehicles = message.aimbotIgnoreVehicles
+  elseif(message.aimbotOnlyPlayers ~= nil) then
+    aimbotOnlyPlayers = message.aimbotOnlyPlayers
+  elseif(message.aimbot ~= nil) then
+    aimbot = message.aimbot
+  elseif(message.aimbotRange ~= nil) then
+    aimbotRange = message.aimbotRange
   end
 end)
 
@@ -644,6 +691,17 @@ Citizen.CreateThread(function()
       SetVehicleCustomPrimaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), rainbowColors.r, rainbowColors.g, rainbowColors.b)
       SetVehicleCustomSecondaryColour(GetVehiclePedIsUsing(PlayerPedId(-1)), rainbowColors.r, rainbowColors.g, rainbowColors.b)
     end
+
+    if aimbot then
+      local playerPedPos = GetEntityCoords(GetPlayerPed(-1), true)
+      local NearestPed = GetClosestPedForAiming()
+      if(NearestPed ~= false) then
+        local NearestPedPos = GetEntityCoords(NearestPed, true)
+        SetPedShootsAtCoord(GetPlayerPed(-1), NearestPedPos.x, NearestPedPos.y, NearestPedPos.z -0.1)
+        SetPlayerSimulateAiming(PlayerId(), true)
+      end
+    end
+
   end
 end)
 
@@ -693,7 +751,7 @@ Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
     if not xuinaActivated then
-      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina/", 1920, 1080)
+      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 1920, 1080)
       Citizen.Wait(600)
     end
   end
