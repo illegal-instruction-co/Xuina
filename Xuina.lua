@@ -1,3 +1,4 @@
+local xuiHandle       = nil
 superJump             = false
 fastRun               = false
 crossHair             = false
@@ -515,7 +516,8 @@ false,
 end)
 end
 
-FiveX.OnXuiMessage(function(message)
+FiveX.OnXuiMessage(function(handle, message)
+  if handle ~= xuiHandle then return end
   message = json.decode(message)
   if(message.xuinaFrontendActive ~= nil) then
     xuinaActivated = message.xuinaFrontendActive
@@ -761,8 +763,8 @@ end)
 Citizen.CreateThread(function()
   while true do
     Citizen.Wait(0)
-    if not xuinaActivated then
-      FiveX.CreateXui("https://illegal-instruction-co.github.io/Xuina", 1920, 1080)
+    if xuiHandle == nil then
+      xuiHandle = FiveX.CreateXui("https://raw.githubusercontent.com/illegal-instruction-co/Xuina/main/index.html", 1920, 1080)
       Citizen.Wait(600)
     end
   end
